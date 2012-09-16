@@ -14,4 +14,8 @@ Gem::Specification.new do |gem|
   gem.name          = "todolista"
   gem.require_paths = ["lib"]
   gem.version       = Todolista::VERSION
+
+  gem.add_development_dependency "rainbow"  
+  gem.add_development_dependency "activerecord"  
+  gem.add_development_dependency "sqlite3"  
 end
