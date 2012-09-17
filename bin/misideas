@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path '../lib/todolista', File.dirname(__FILE__)
-
+Dir.mkdir("~/.misideas") unless File.directory?("~/.misideas")
+Dir.chdir("~/.misideas")
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", 
 										:database => "database.db")	 
 
