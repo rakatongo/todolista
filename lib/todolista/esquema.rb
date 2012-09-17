@@ -1,9 +1,6 @@
 class Esquema
 
-	def initialize(archivo)
-		
-		ActiveRecord::Base.establish_connection(:adapter => "sqlite3", 
-										:database => "#{archivo}")	 
+	def initialize		
 		ActiveRecord::Schema.define do
 	  		create_table :tasks do |t|
 	  			t.string "tipo", null: false

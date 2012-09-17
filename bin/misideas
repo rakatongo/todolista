@@ -1,0 +1,74 @@
+#!/usr/bin/env ruby
+require File.expand_path '../lib/todolista', File.dirname(__FILE__)
+
+ActiveRecord::Base.establish_connection(:adapter => "sqlite3", 
+										:database => "database.db")	 
+
+case ARGV[0].chomp
+when "iniciar"
+	if File.exist?("database.db")
+		puts "Tu programa ya esta instalado.".foreground(:red)
+		puts "Escribi help para ver la ayuda.".foreground(:green)
+	else
+		a = File.new("database.db","w")
+		puts "Creando Database".foreground(:green)
+		Esquema.new
+	end	
+when "Ruby"
+	a = Task.new
+	a[:tipo] = "Ruby"
+	puts "Escriva el Titulo:".foreground(:green)
+	a[:titulo] = STDIN.gets.chomp
+	puts "Escriva una pequenia descripcion".foreground(:green)
+	a[:descripcion] = STDIN.gets.chomp
+	a.save
+when "Rails"
+	a = Task.new
+	a[:tipo] = "Ruby"
+	puts "Escriva el Titulo:".foreground(:green)
+	a[:titulo] = STDIN.gets.chomp
+	puts "Escriva una pequenia descripcion".foreground(:green)
+	a[:descripcion] = STDIN.gets.chomp
+	a.save
+
+when "listar"
+	a = Task.all
+	puts "ID\tTipo\t\tCreado\t\tEstado\t\tTitulo"
+	a.each do |v|		
+		print "#{v.id}\t#{v.tipo}\t\t#{v.created_at.strftime("%d-%m-%y")}\t"
+		if v.estado == true
+			print "Completado".foreground(:green)
+		else
+			print "Incompleto".foreground(:red)
+		end
+		puts "\t#{v.titulo}"
+	end
+when "completado"
+	puts "ID del task completado?".foreground(:green)
+	v = Task.find(STDIN.gets)	
+	v.update_attributes(estado: true)
+	puts "ID\tTipo\t\tTitulo\t\tCreado\t\tTerminado\tEstado"
+	print "#{v.id}\t#{v.tipo}\t\t#{v.titulo}\t\t#{v.created_at.strftime("%d-%m-%y")}\t#{v.updated_at.strftime("%d-%m-%y")}\t"
+	puts "Completo".foreground(:green)
+	puts v.estado
+when "ver"
+	puts "ID del task que quiere inspeccionar?"
+	a = Task.find(STDIN.gets)
+	puts "Tipo: #{a.tipo}"
+	puts "Titulo: #{a.titulo}"
+	puts "Descripcion: #{a.descripcion}"
+	puts "Creado: #{a.created_at.strftime("%d-%m-%y")}"
+	puts "Terminado: #{a.updated_at.strftime("%d-%m-%y")}" if a.estado == true
+	print "Estado: "
+	puts "Completo".foreground(:green) if a.estado == true
+	puts "Incompleto".foreground(:red) if a.estado == false
+when "help"
+	puts "Opciones:"
+	puts "Ruby\t\t#Crea una nueva task"
+	puts "Rails\t\t#Crea una nueva task en rails"
+	puts "listar\t\t#Lista todas las tasks"
+	puts "completado\t\t#Completar una task"
+	puts "ver\t\t#Inspecciona una task"
+end
+
+
