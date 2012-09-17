@@ -1,5 +1,6 @@
 require "active_record"
 require "rainbow"
+require "fileutils"
 libdir = File.dirname(__FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
