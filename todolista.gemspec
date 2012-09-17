@@ -4,8 +4,8 @@ require File.expand_path('../lib/todolista/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["rakatongo"]
   gem.email         = ["rakatongo@hotmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Crea una todo list }
+  gem.summary       = %q{Cualquier cosa}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
